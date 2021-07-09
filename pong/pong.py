@@ -34,12 +34,24 @@ while carry_on:
             if event.key==pygame.K_x:
                 carry_on = False 
 
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_w]:
+        paddle_A.move_up(5)
+    if keys[pygame.K_s]:
+        paddle_A.move_down(5)
+    if keys[pygame.K_UP]:
+        paddle_B.move_up(5)
+    if keys[pygame.K_DOWN]:
+        paddle_B.move_down(5)
+
     #Game logic should go here
     all_sprites_list.update()
 
     #drawing code should go here
     screen.fill(BLACK)
     pygame.draw.line(screen, WHITE, [349,0], [349, 500], 5)
+
+    all_sprites_list.draw(screen)
 
     pygame.display.flip()
 
