@@ -7,16 +7,18 @@ pygame.init()
 
 BLACK = (0,0,0)
 WHITE = (255,255,255)
+RED = (255,0,0)
+BLUE = (0,0,255)
 
 size = (700,500)
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption("Pong")
 
-paddle_A = Paddle(WHITE, 10 ,100)
+paddle_A = Paddle(RED, 10 ,100)
 paddle_A.rect.x = 20
 paddle_A.rect.y = 200
 
-paddle_B = Paddle(WHITE, 10 ,100)
+paddle_B = Paddle(BLUE, 10 ,100)
 paddle_B.rect.x = 670
 paddle_B.rect.y = 200
 
@@ -58,7 +60,7 @@ while carry_on:
     #Game logic should go here
     all_sprites_list.update()
 
-    
+
     if ball.rect.x>=690:
         scoreA += 1
         ball.velocity[0] = -ball.velocity[0]
@@ -73,6 +75,8 @@ while carry_on:
     if pygame.sprite.collide_mask(ball, paddle_A) or pygame.sprite.collide_mask(ball, paddle_B):
         ball.bounce()
 
+   
+
     #drawing code should go here
     screen.fill(BLACK)
     pygame.draw.line(screen, WHITE, [349,0], [349, 500], 5)
@@ -80,10 +84,22 @@ while carry_on:
     all_sprites_list.draw(screen)
 
     font = pygame.font.Font(None, 74)
-    text = font.render(str(scoreA), 1, WHITE)
-    screen.blit(text, (250,10))
-    text = font.render(str(scoreB), 1, WHITE)
-    screen.blit(text,(420,10))
+
+    if scoreA > 0:
+        text = font.render(str(scoreA), 1, RED)
+        screen.blit(text, (250,10))
+        text = font.render(str(scoreB), 1, BLUE)
+        screen.blit(text,(420,10))
+    elif scoreB > 0:
+        text = font.render(str(scoreA), 1, RED)
+        screen.blit(text, (250,10))
+        text = font.render(str(scoreB), 1, BLUE)
+        screen.blit(text,(420,10))
+    else:
+        text = font.render(str(scoreA), 1, WHITE)
+        screen.blit(text, (250,10))
+        text = font.render(str(scoreB), 1, WHITE)
+        screen.blit(text,(420,10))
 
     pygame.display.flip()
 
